@@ -12,12 +12,15 @@ class User(SqlAlchemyBase, UserMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    surname = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
+    list_id_liked_books = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    list_id_liked_authors = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    created_date = sqlalchemy.Column(sqlalchemy.DateTime,
-                                     default=datetime.datetime.now)
+    sex = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    registration_date = sqlalchemy.Column(sqlalchemy.DateTime,
+                                          default=datetime.datetime.now)
     news = orm.relation("News", back_populates='user')
 
     def set_password(self, password):
@@ -25,3 +28,4 @@ class User(SqlAlchemyBase, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.hashed_password, password)
+
